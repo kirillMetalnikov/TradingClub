@@ -20,8 +20,9 @@ module.exports = (app, passport) => {
     .get(usersHundler.getUsers)
 
   app.route('/auth/logout')
-    .post(passport.authenticate('local'),
+    .get(passport.authenticate('local'),
       (req, res) => {
+        console.log('logout')
         res.redirect('/')
     })
 
@@ -31,6 +32,6 @@ module.exports = (app, passport) => {
   app.route('/login')
     .post(passport.authenticate('local', { failureRedirect: '/login' }),
       (req, res) => {
-        res.redirect('/dashboard')
+        res.redirect('/yourbooks')
     })
 }

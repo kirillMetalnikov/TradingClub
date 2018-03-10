@@ -3,7 +3,7 @@ var mongoose = require('mongoose')
 var bodyParser = require('body-parser')
 var passport = require('passport')
 var session = require('express-session')
-
+var fallback = require('express-history-api-fallback')
 
 
 var app = express()
@@ -26,7 +26,9 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+
 require('./app/routes')(app, passport)
+app.use(fallback(process.cwd() + '/client/public/index.html'))
 
 var port = process.env.PORT || 8080
 app.listen(port, () => {
