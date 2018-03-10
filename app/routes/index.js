@@ -16,21 +16,20 @@ module.exports = (app, passport) => {
       res.sendFile(path + '/client/public/index.html')
     })
 
-  app.route('/users/')
-    .get(usersHundler.getUsers)
+  app.route('/api/current_user/')
+    .get(usersHundler.current)
 
   app.route('/auth/logout')
-    .get(passport.authenticate('local'),
-      (req, res) => {
-        console.log('logout')
+    .get((req, res) => {
+        req.logout()
         res.redirect('/')
     })
 
-  app.route('/auth/signup')
+  app.route('/signup')
     .post(usersHundler.signup)
 
-  app.route('/login')
-    .post(passport.authenticate('local', { failureRedirect: '/login' }),
+  app.route('/auth/login')
+    .post(passport.authenticate('local', { failureRedirect: '/signup' }),
       (req, res) => {
         res.redirect('/yourbooks')
     })

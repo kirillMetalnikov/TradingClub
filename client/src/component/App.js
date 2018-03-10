@@ -13,12 +13,12 @@ import SignUp from './SignUp'
 import YourBooks from './YourBooks'
 import Page404 from './Page404'
 
-//import {getCurrentUser} from 'actions'
+import {getCurrentUser} from '../actions'
 
 class App extends Component {
   
-  componentWillMount() {
-  //  this.props.getCurrentUser()
+  componentDidMount() {
+    this.props.getCurrentUser()
   }
   
   render() {
@@ -45,5 +45,4 @@ class App extends Component {
   }
 }
 
-export default connect()(App)
-//export default connect(null, {getCurrentUser})(App)
+export default connect(null, {getCurrentUser})(App)

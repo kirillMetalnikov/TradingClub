@@ -43,10 +43,5 @@ class NavLogged extends Component {
   }
 }
 
-
-function mapStateToProps({user}) {
-  return {user}
-}
-
-// without {pure: false} an active link don't work
-export default connect(mapStateToProps, null, null, {pure: false})(NavLogged)
+// without {pure: false} an active link don't work (and need to Parent component!!!)
+export default connect(null, null, null, {pure: false})(NavLogged)

@@ -12,6 +12,18 @@ function UsersHundler() {
       })
   }
 
+  this.current = function (req, res) {
+    if (req.user == undefined) {res.json({user: false})
+    } else {
+      User
+        .findOne({_id: req.user._id})
+        .exec( (err, result) => {
+          if (err) { throw err }
+          res.json({user: result})
+        })
+    }
+  }
+
   this.signup = function (req, res, next) {
     var newUser = new User()
     var {name, email, password} = req.body
