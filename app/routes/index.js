@@ -1,7 +1,15 @@
 var path = process.cwd()
 var UsersHundler = require('../controllers/users')
 
-module.exports = (app) => {
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    res.json({type: 'login', message: 'You need login'})
+  }
+}
+
+module.exports = (app, passport) => {
   var usersHundler = new UsersHundler()
   app.route('/')
     .get((req, res) => {
@@ -10,5 +18,19 @@ module.exports = (app) => {
 
   app.route('/users/')
     .get(usersHundler.getUsers)
-    .post(usersHundler.newUser)
+
+  app.route('/auth/logout')
+    .post(passport.authenticate('local'),
+      (req, res) => {
+        res.redirect('/')
+    })
+
+  app.route('/auth/signup')
+    .post(usersHundler.signup)
+
+  app.route('/login')
+    .post(passport.authenticate('local', { failureRedirect: '/login' }),
+      (req, res) => {
+        res.redirect('/dashboard')
+    })
 }
