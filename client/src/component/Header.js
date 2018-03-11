@@ -11,9 +11,6 @@ class Header extends Component {
   }
 }
 
-
-
-
 function mapStateToProps({user}) {
   return {user}
 }

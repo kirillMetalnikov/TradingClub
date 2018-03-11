@@ -14,11 +14,18 @@ module.exports = passport => {
   })
 
   passport.use('local', new LocalStrategy(
-    function(username, password, next) {
+    {passReqToCallback: true},
+    (req, username, password, next) => {
       User.findOne({email: username}, function(err, user) {
         if (err) { return next(err) }
-        if (!user) { return next(null, false) }
-        if (user.password != password) { return next(null, false) }
+        if (!user) {
+          req.authErr = 'email or password failed!'
+          return next(null, false)
+        }
+        if (user.password != password) {
+          req.authErr = 'email or password failed!'
+          return next(null, false)
+        }
         return next(null, user)
       });
     }));

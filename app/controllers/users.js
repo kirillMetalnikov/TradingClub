@@ -27,7 +27,7 @@ function UsersHundler() {
   this.signup = function (req, res, next) {
     var newUser = new User()
     var {name, email, password} = req.body
-
+    console.log(name, email, password)
     newUser.name = name
     newUser.email = email
     newUser.password = password
@@ -37,7 +37,7 @@ function UsersHundler() {
         : req.logIn(user, err => {
           return err
             ? next(err)
-            : res.redirect('/dashboard')
+            : res.json({user})
         })
     })
   }

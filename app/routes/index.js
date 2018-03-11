@@ -25,12 +25,18 @@ module.exports = (app, passport) => {
         res.redirect('/')
     })
 
-  app.route('/signup')
+  app.route('/auth/signup')
     .post(usersHundler.signup)
 
   app.route('/auth/login')
-    .post(passport.authenticate('local', { failureRedirect: '/signup' }),
+    .post(passport.authenticate('local', { failWithError: true }),
       (req, res) => {
-        res.redirect('/yourbooks')
-    })
+        res.json({user: req.user})
+      },
+      (err, req, res, next) => {
+        if (req.authErr) {
+          res.send({message: req.authErr})
+        }
+      }
+    )
 }

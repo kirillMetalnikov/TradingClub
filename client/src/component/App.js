@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Switch, Router} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {Grid, Row} from 'react-bootstrap'
 
+import history from '../history'
 import Header from './Header'
 import NavLogged from './NavLogged'
 import Home from './Home'
@@ -16,15 +17,15 @@ import Page404 from './Page404'
 import {getCurrentUser} from '../actions'
 
 class App extends Component {
-  
+
   componentDidMount() {
     this.props.getCurrentUser()
   }
-  
+
   render() {
     return (
       <Grid>
-        <BrowserRouter>
+        <Router history= {history}>
           <div>
             <Row>
               <Header />
@@ -39,7 +40,7 @@ class App extends Component {
               <Route component={Page404} />
             </Switch>
           </div>
-        </BrowserRouter>
+        </Router>
       </Grid>
     )
   }
