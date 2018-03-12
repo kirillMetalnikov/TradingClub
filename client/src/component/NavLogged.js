@@ -27,7 +27,7 @@ class NavLogged extends Component {
         </Nav>
         <Nav pullRight>
           <Navbar.Text>
-            Hellow, {this.props.user.name}
+            Hello, {this.props.user.name}
           </Navbar.Text>
           <IndexLinkContainer to='/profile'>
             <NavItem location={this.props.location}>

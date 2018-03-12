@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 import history from '../history'
 import qs from 'qs'
 
@@ -32,5 +32,25 @@ export const login = (email, password) => dispatch => {
     .catch((err) => {
       var {message} = err.response.data
       console.log(message)
+    })
+}
+
+export const changeProfile = (name, location) => dispatch => {
+  axios.put('/api/profile', {name, location})
+    .then( res => {
+      var {user} = res.data
+      if(user) {
+        dispatch({type: GET_CURRENT_USER, user})
+      }
+    })
+}
+
+export const changePassword = (oldPassword, newPassword) => dispatch => {
+  axios.put('/api/password', {oldPassword, newPassword})
+    .then( res => {
+      var {user} = res.data
+      if(user) {
+        dispatch({type: GET_CURRENT_USER, user})
+      }
     })
 }

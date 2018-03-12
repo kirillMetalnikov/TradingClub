@@ -1,23 +1,34 @@
 var path = process.cwd()
 var UsersHundler = require('../controllers/users')
+var BooksHundler = require('../controllers/books')
 
 const isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   } else {
-    res.json({type: 'login', message: 'You need login'})
+    res.json({user: false, message: {type: 'login', text: 'You need login'}})
   }
 }
 
 module.exports = (app, passport) => {
   var usersHundler = new UsersHundler()
+  var booksHundler = new BooksHundler()
+
   app.route('/')
     .get((req, res) => {
       res.sendFile(path + '/client/public/index.html')
     })
 
   app.route('/api/current_user/')
-    .get(usersHundler.current)
+    .get(isLoggedIn, usersHundler.current)
+
+  app.route('/api/books/')
+    .get(booksHundler.search)
+
+  app.route('/api/profile')
+    .put(isLoggedIn, usersHundler.changeProfile)
+  app.route('/api/password')
+    .put(isLoggedIn, usersHundler.changePassword)
 
   app.route('/auth/logout')
     .get((req, res) => {
