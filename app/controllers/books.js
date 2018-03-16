@@ -58,8 +58,42 @@ function BooksHundler() {
         if (err) {
           res.json({message: {type: 'error', text: err}})
         }
-        console.log(book)
         res.json({_id: book._id})
+      })
+  }
+
+  this.trade = (req, res) => {
+    var {_id} = req.body
+    var from = req.user._id
+    Book
+      .findByIdAndUpdate(_id, {$set: {trade: {from, aproved: false}}}, {new: true})
+      .exec( (err, book) => {
+        if (err) {
+          res.json({message: {type: 'error', text: err}})
+        }
+        res.json({book})
+      })
+  }
+
+  this.forYouReq = (req, res) => {
+    Book
+      .find({owner: req.user._id, trade: { $ne: null }})
+      .exec((err, books) => {
+        if (err) {
+          res.json({message: {type: 'error', text: err}})
+        }
+        res.json({books})
+      })
+  }
+
+  this.yourReq = (req, res) => {
+    Book
+      .find({"trade.from": req.user._id})
+      .exec((err, books) => {
+        if (err) {
+          res.json({message: {type: 'error', text: err}})
+        }
+        res.json({books})
       })
   }
 }

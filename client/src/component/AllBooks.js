@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import {getAllBooks} from '../actions'
+import {getAllBooks, trade} from '../actions'
+import TradePanel from './TradePanel'
 
 class AllBooks extends Component {
   constructor(props) {
@@ -13,6 +14,12 @@ class AllBooks extends Component {
     this.props.getAllBooks()
   }
   
+  hundleTrade(_id) {
+    return () => {
+      this.props.trade(_id)
+    }
+  }
+  
   renderList(){
     var {allBooks} = this.props
     return allBooks.map( book => {
@@ -21,6 +28,7 @@ class AllBooks extends Component {
         <div className = 'book' key = {_id}>
           <h5>{title}</h5>
           <img src = {thumbnail} />
+          <button onClick={this.hundleTrade(_id)}>trade</button>
         </div>
       )
     })
@@ -30,6 +38,7 @@ class AllBooks extends Component {
     return (
       <div>
         <h1>AllBooks</h1>
+        <TradePanel />
         {this.renderList()}
       </div>
     )
@@ -39,4 +48,4 @@ class AllBooks extends Component {
 const mapStateToProps = ({allBooks}) => {
   return {allBooks}
 }
-export default connect(mapStateToProps, {getAllBooks})(AllBooks)
+export default connect(mapStateToProps, {getAllBooks, trade})(AllBooks)

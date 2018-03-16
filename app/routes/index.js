@@ -30,6 +30,13 @@ module.exports = (app, passport) => {
     .post(isLoggedIn, booksHundler.add)
   app.route('/api/books/')
     .delete(isLoggedIn, booksHundler.delete)
+  app.route('/api/books/trade')
+    .put(isLoggedIn, booksHundler.trade)
+
+  app.route('/api/requests/your')
+    .get(isLoggedIn, booksHundler.yourReq)
+  app.route('/api/requests/for_you')
+    .get(isLoggedIn, booksHundler.forYouReq)
 
   app.route('/api/profile')
     .put(isLoggedIn, usersHundler.changeProfile)

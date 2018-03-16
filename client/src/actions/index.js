@@ -2,7 +2,16 @@ import axios from 'axios'
 import history from '../history'
 import qs from 'qs'
 
-import {GET_CURRENT_USER, GET_ALL_BOOKS, GET_YOUR_BOOKS, ADD_YOUR_BOOK, DELETE_BOOK} from '../consts.js'
+import {
+  GET_CURRENT_USER,
+  GET_ALL_BOOKS,
+  GET_YOUR_BOOKS,
+  ADD_YOUR_BOOK,
+  DELETE_BOOK,
+  TRADE_BOOK,
+  GET_YOUR_REQUESTS,
+  GET_FOR_YOUR_REQUESTS
+} from '../consts.js'
 
 export const getCurrentUser = () => dispatch => {
   axios.get('/api/current_user')
@@ -84,5 +93,30 @@ export const deleteBook = (_id) => dispatch => {
     .then(res => {
       var {_id} = res.data
       dispatch({type: DELETE_BOOK, _id})
+    })
+}
+
+export const trade = (_id) => dispatch => {
+  axios.put('/api/books/trade', {_id})
+    .then(res => {
+      var {_id} = res.data.book
+      dispatch({type: TRADE_BOOK, _id})
+    })
+}
+
+export const yourReq = () => dispatch => {
+  axios.get('/api/requests/your')
+    .then(res => {
+      var {books} = res.data
+      dispatch({type: GET_YOUR_REQUESTS, books})
+    })
+}
+
+
+export const forYourReq = () => dispatch => {
+  axios.get('/api/requests/for_you')
+    .then(res => {
+      var {books} = res.data
+      dispatch({type: GET_FOR_YOUR_REQUESTS, books})
     })
 }

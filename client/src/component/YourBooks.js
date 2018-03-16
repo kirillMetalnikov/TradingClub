@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import {addBook, getYourBooks, deleteBook} from '../actions'
+import TradePanel from './TradePanel'
 
 class YourBooks extends Component {
   constructor(props) {
@@ -50,6 +51,7 @@ class YourBooks extends Component {
     return (
       <div>
         <h1>YourBooks</h1>
+        <TradePanel />
         <form onSubmit = {this.hundleSubmit.bind(this)}>
           <input onChange = {this.hundleChange.bind(this)} placeholder = 'enter name book' value = {this.state.inputValue}/>
           <button type = 'submit'>Add</button>
