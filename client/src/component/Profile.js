@@ -24,6 +24,9 @@ class Profile extends Component {
   hundleChangeProfile(e) {
     e.preventDefault()
     var {name, location} = this.state.input
+    if(!name) name = this.props.user ? this.props.user.name : ''
+    if(!location) location = this.props.user ? this.props.user.location : ''
+    
     this.setState({input: {name: '', location: ''}})
     this.props.changeProfile(name, location)
   }
