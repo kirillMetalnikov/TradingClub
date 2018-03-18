@@ -1,33 +1,35 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom';
-import {Navbar, Nav, NavItem} from 'react-bootstrap'
-import {IndexLinkContainer, LinkContainer} from 'react-router-bootstrap'
+import {Menu, Container} from 'semantic-ui-react'
+
+import history from '../history'
 
 class NavUnlogged extends Component {
+  constructor(props) {
+    super(props)
+    var location = history.location.pathname.substring(1)
+    this.state = { activeItem: location }
+    this.handleItemClick = this.handleItemClick.bind(this)
+  }
+
+  handleItemClick(e, { name }) {
+    this.setState({ activeItem: name })
+    name == 'home' ? history.push('/') : history.push('/' + name)
+  }
+
   render() {
+    var { activeItem } = this.state
+
     return (
-      <Navbar>
-        <Nav>
-          <IndexLinkContainer to='/'>
-            <NavItem>
-            Home
-            </NavItem>
-          </IndexLinkContainer>
-        </Nav>
-        <Nav pullRight>
-          <IndexLinkContainer to='/signup'>
-            <NavItem>
-              SignUp
-            </NavItem>
-          </IndexLinkContainer>
-          <IndexLinkContainer to='/login'>
-            <NavItem>
-              Login
-            </NavItem>
-          </IndexLinkContainer>
-        </Nav>
-    </Navbar>
+      <Menu size='large' pointing secondary color='violet' inverted>
+        <Container>
+          <Menu.Item name='home' active={activeItem === 'home' || activeItem == ''} onClick={this.handleItemClick} />
+          <Menu.Menu position='right'>
+            <Menu.Item name='signUp' active={activeItem === 'signUp'} onClick={this.handleItemClick} />
+            <Menu.Item name='login' active={activeItem === 'login'} onClick={this.handleItemClick} />
+          </Menu.Menu>
+        </Container>
+      </Menu>
     )
   }
 }

@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import { Form, Button, Header, Container, Divider, Message } from 'semantic-ui-react'
 
-import {signUp} from '../actions'
+import {signUp, clearMessage} from '../actions'
 
 class SignUp extends Component {
   constructor(props) {
@@ -22,20 +23,50 @@ class SignUp extends Component {
   hundleSubmit(e) {
     e.preventDefault()
     var {name, email, password} = this.state.input
-    this.setState({input: {name: '', email: '', password: ''}})
     this.props.signUp(name, email, password)
   }
 
+  componentWillUnmount() {
+    this.setState({input: {name: '', email: '', password: ''}})
+    this.props.clearMessage()
+  }
+
   render() {
+    var {signUpForm} = this.props
+
     return (
-      <form  onSubmit = {this.hundleSubmit}>
-        <input type = 'text' label = 'Name' onChange = {this.hundleChange('name')} value = {this.state.name}></input>
-        <input type = 'text' label = 'email' onChange = {this.hundleChange('email')} value = {this.state.name}></input>
-        <input type = 'password' name ='password' onChange = {this.hundleChange('password')} value = {this.state.name}></input>
-        <button type='submit'>SignUp</button>
-      </form>
+      <Container>
+      <Header as='h1'>SignUP</Header>
+        <Form
+          onSubmit = {this.hundleSubmit}
+          error = {signUpForm && signUpForm.type == 'error'}
+        >
+          <Message
+            error
+            header={signUpForm ? signUpForm.header: ''}
+            content={signUpForm ? signUpForm.text: ''}
+          />
+          <Form.Field>
+            <label>Name</label>
+            <input type = 'text' onChange = {this.hundleChange('name')} value = {this.state.input.name} />
+          </Form.Field>
+          <Form.Field>
+            <label>Email</label>
+            <input type = 'text' onChange = {this.hundleChange('email')} value = {this.state.input.email} />
+          </Form.Field>
+          <Form.Field>
+            <label>Password</label>
+            <input type = 'password' onChange = {this.hundleChange('password')} value = {this.state.input.password} />
+          </Form.Field>
+          <Button type='submit' color = 'violet'>SignUp</Button>
+        </Form>
+      </Container>
     )
   }
 }
 
-export default connect(null, {signUp})(SignUp)
+const mapStateToProps = ({messages}) => {
+  var {signUpForm} = messages
+  return {signUpForm}
+}
+export default connect(mapStateToProps, {signUp, clearMessage})(SignUp)

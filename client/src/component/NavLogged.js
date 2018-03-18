@@ -1,44 +1,43 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom';
-import {Navbar, Nav, NavItem} from 'react-bootstrap'
-import {IndexLinkContainer, LinkContainer} from 'react-router-bootstrap'
+import {Menu, Container} from 'semantic-ui-react'
+
+import history from '../history'
+import {logout} from '../actions'
 
 class NavLogged extends Component {
+  constructor(props) {
+    super(props)
+    var location = history.location.pathname.substring(1)
+    this.state = { activeItem: location }
+    this.handleItemClick = this.handleItemClick.bind(this)
+  }
+
+  handleItemClick(e, { name }) {
+    this.setState({ activeItem: name })
+    name == 'home'
+      ? history.push('/')
+      : name == 'logout'
+        ? this.props.logout()
+        :history.push('/' + name)
+  }
+
   render() {
+    var { activeItem } = this.state
     return (
-      <Navbar>
-        <Nav>
-          <IndexLinkContainer to='/'>
-            <NavItem>
-            Home
-            </NavItem>
-          </IndexLinkContainer>
-          <IndexLinkContainer to='/allbooks'>
-            <NavItem>
-             All books
-            </NavItem>
-          </IndexLinkContainer>
-          <IndexLinkContainer to='/yourbooks' location={this.props.location}>
-            <NavItem>
-             Your books
-            </NavItem>
-          </IndexLinkContainer>
-        </Nav>
-        <Nav pullRight>
-          <Navbar.Text>
-            Hello, {this.props.user.name}
-          </Navbar.Text>
-          <IndexLinkContainer to='/profile'>
-            <NavItem location={this.props.location}>
-             Profile
-            </NavItem>
-          </IndexLinkContainer>
-          <NavItem href="/auth/logout">
-            Logout
-          </NavItem>
-        </Nav>
-    </Navbar>
+      <Menu size='large' pointing secondary color='violet' inverted>
+        <Container>
+          <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+          <Menu.Item name='allbooks' active={activeItem === 'allbooks'} onClick={this.handleItemClick} />
+          <Menu.Item name='yourbooks' active={activeItem === 'yourbooks'} onClick={this.handleItemClick} />
+
+          <Menu.Menu position='right'>
+            <Menu.Item header>Hello, {this.props.user.name}</Menu.Item>
+            <Menu.Item name='profile' active={activeItem === 'profile'} onClick={this.handleItemClick} />
+            <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleItemClick} />
+          </Menu.Menu>
+        </Container>
+      </Menu>
     )
   }
 }
@@ -48,4 +47,4 @@ function mapStateToProps({user}) {
   return {user}
 }
 // without {pure: false} an active link don't work (and need to Parent component!!!)
-export default connect(mapStateToProps, null, null, {pure: false})(NavLogged)
+export default connect(mapStateToProps, {logout}, null, {pure: false})(NavLogged)

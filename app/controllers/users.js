@@ -51,20 +51,29 @@ function UsersHundler() {
   }
 
   this.signup = function (req, res, next) {
-    var newUser = new User()
-    var {name, email, password} = req.body
-    newUser.name = name
-    newUser.email = email
-    newUser.password = password
-    newUser.save( (err, user) => {
-      return err
-        ? next(err)
-        : req.logIn(user, err => {
-          return err
-            ? next(err)
-            : res.json({user})
-        })
-    })
+    User
+      .findOne({email: req.body.email})
+      .exec( (err, result) => {
+        if (err) { res.json({message: {type: 'error', text: err}}) }
+        if (result) {
+          res.json({message: {type: 'email', text: 'The user with this email is registered in our system'}})
+        } else {
+          var newUser = new User()
+          var {name, email, password} = req.body
+          newUser.name = name
+          newUser.email = email
+          newUser.password = password
+          newUser.save( (err, user) => {
+            return err
+              ? next(err)
+              : req.logIn(user, err => {
+                return err
+                  ? next(err)
+                  : res.json({user})
+              })
+          })
+        }
+      })
   }
 }
 

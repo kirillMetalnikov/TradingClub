@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {BrowserRouter, Route, Switch, Router} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {Grid, Row} from 'react-bootstrap'
+//import {Grid, Row} from 'react-bootstrap'
 
 import history from '../history'
 import Header from './Header'
@@ -24,12 +24,9 @@ class App extends Component {
 
   render() {
     return (
-      <Grid>
         <Router history= {history}>
           <div>
-            <Row>
-              <Header />
-            </Row>
+            <Header />
             <Switch>
               <Route exact path ='/' component={Home} />
               <Route exact path ='/allbooks' component={AllBooks} />
@@ -41,7 +38,6 @@ class App extends Component {
             </Switch>
           </div>
         </Router>
-      </Grid>
     )
   }
 }

@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import { Form, Button, Header, Container, Divider, Message } from 'semantic-ui-react'
 
-import {login} from '../actions'
+import {login, clearMessage} from '../actions'
 
 class Login extends Component {
   constructor(props) {
@@ -27,16 +28,42 @@ class Login extends Component {
     this.props.login(email, password)
   }
 
+  componentWillUnmount() {
+    this.props.clearMessage()
+  }
+
   render() {
     var {email, password} = this.state.input
+    var {loginForm} = this.props
     return (
-      <form  onSubmit = {this.hundleSubmit}>
-        <input type = 'text' label = 'email' onChange = {this.hundleChange('email')} value = {email}></input>
-        <input type = 'password' name ='password' onChange = {this.hundleChange('password')} value = {password}></input>
-        <button type='submit'>login</button>
-      </form>
+      <Container>
+        <Header as='h1'>Login</Header>
+        <Form
+          onSubmit = {this.hundleSubmit}
+          error = {loginForm && loginForm.type == 'error'}
+        >
+          <Message
+            error
+            header={loginForm ? loginForm.header: ''}
+            content={loginForm ? loginForm.text: ''}
+          />
+          <Form.Field>
+            <label>Email</label>
+            <input type = 'text' onChange = {this.hundleChange('email')} value = {email} />
+          </Form.Field>
+          <Form.Field>
+            <label>Password</label>
+            <input type = 'password' onChange = {this.hundleChange('password')} value = {password} />
+          </Form.Field>
+          <Button type='submit' color = 'violet'>Login</Button>
+        </Form>
+      </Container>
     )
   }
 }
 
-export default connect(null, {login})(Login)
+const mapStateToProps = ({messages}) => {
+  var {loginForm} = messages
+  return {loginForm}
+}
+export default connect(mapStateToProps, {login, clearMessage})(Login)
