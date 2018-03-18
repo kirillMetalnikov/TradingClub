@@ -32,6 +32,10 @@ module.exports = (app, passport) => {
     .delete(isLoggedIn, booksHundler.delete)
   app.route('/api/books/trade')
     .put(isLoggedIn, booksHundler.trade)
+  app.route('/api/books/trade/aprove')
+    .put(isLoggedIn, booksHundler.tradeAprove)
+  app.route('/api/books/trade/delete')
+    .put(isLoggedIn, booksHundler.tradeDelete)
 
   app.route('/api/requests/your')
     .get(isLoggedIn, booksHundler.yourReq)

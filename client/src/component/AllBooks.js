@@ -9,31 +9,32 @@ class AllBooks extends Component {
     super(props)
     this.renderList = this.renderList.bind(this)
   }
-  
+
   componentWillMount() {
     this.props.getAllBooks()
   }
-  
+
   hundleTrade(_id) {
     return () => {
       this.props.trade(_id)
     }
   }
-  
+
   renderList(){
     var {allBooks} = this.props
+    var userID = this.props.user && this.props.user._id
     return allBooks.map( book => {
-      var {title, thumbnail, _id} = book
+      var {title, thumbnail, _id, owner} = book
       return (
         <div className = 'book' key = {_id}>
           <h5>{title}</h5>
           <img src = {thumbnail} />
-          <button onClick={this.hundleTrade(_id)}>trade</button>
+          {userID != owner ? <button onClick={this.hundleTrade(_id)}>trade</button> : null}
         </div>
       )
     })
   }
-  
+
   render() {
     return (
       <div>
@@ -45,7 +46,7 @@ class AllBooks extends Component {
   }
 }
 
-const mapStateToProps = ({allBooks}) => {
-  return {allBooks}
+const mapStateToProps = ({allBooks, user}) => {
+  return {allBooks, user}
 }
 export default connect(mapStateToProps, {getAllBooks, trade})(AllBooks)

@@ -1910,7 +1910,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.forYourReq = exports.yourReq = exports.trade = exports.deleteBook = exports.getYourBooks = exports.getAllBooks = exports.addBook = exports.changePassword = exports.changeProfile = exports.login = exports.signUp = exports.getCurrentUser = undefined;
+exports.aproveTrade = exports.cancelTrade = exports.forYourReq = exports.yourReq = exports.trade = exports.deleteBook = exports.getYourBooks = exports.getAllBooks = exports.addBook = exports.changePassword = exports.changeProfile = exports.login = exports.signUp = exports.getCurrentUser = undefined;
 
 var _axios = __webpack_require__(400);
 
@@ -2031,9 +2031,9 @@ var deleteBook = exports.deleteBook = function deleteBook(_id) {
 var trade = exports.trade = function trade(_id) {
   return function (dispatch) {
     _axios2.default.put('/api/books/trade', { _id: _id }).then(function (res) {
-      var _id = res.data.book._id;
+      var book = res.data.book;
 
-      dispatch({ type: _consts.TRADE_BOOK, _id: _id });
+      dispatch({ type: _consts.TRADE_BOOK, book: book });
     });
   };
 };
@@ -2054,6 +2054,26 @@ var forYourReq = exports.forYourReq = function forYourReq() {
       var books = res.data.books;
 
       dispatch({ type: _consts.GET_FOR_YOUR_REQUESTS, books: books });
+    });
+  };
+};
+
+var cancelTrade = exports.cancelTrade = function cancelTrade(_id) {
+  return function (dispatch) {
+    _axios2.default.put('/api/books/trade/delete', { _id: _id }).then(function (res) {
+      var book = res.data.book;
+
+      dispatch({ type: _consts.CANCEL_TRADE, book: book });
+    });
+  };
+};
+
+var aproveTrade = exports.aproveTrade = function aproveTrade(_id) {
+  return function (dispatch) {
+    _axios2.default.put('/api/books/trade/aprove', { _id: _id }).then(function (res) {
+      var book = res.data.book;
+
+      dispatch({ type: _consts.APROVE_TRADE, book: book });
     });
   };
 };
@@ -12971,6 +12991,8 @@ var DELETE_BOOK = exports.DELETE_BOOK = 'DELETE_BOOK';
 var TRADE_BOOK = exports.TRADE_BOOK = 'TRADE_BOOK';
 var GET_YOUR_REQUESTS = exports.GET_YOUR_REQUESTS = 'GET_YOUR_REQUESTS';
 var GET_FOR_YOUR_REQUESTS = exports.GET_FOR_YOUR_REQUESTS = 'GET_FOR_YOUR_REQUESTS';
+var CANCEL_TRADE = exports.CANCEL_TRADE = 'CANCEL_TRADE';
+var APROVE_TRADE = exports.APROVE_TRADE = 'APROVE_TRADE';
 
 /***/ }),
 /* 186 */
@@ -13026,34 +13048,111 @@ var TradePanel = function (_Component) {
       var _this2 = this;
 
       return function () {
+        _this2.props.yourReq();
+        _this2.props.forYourReq();
         _this2.setState({ active: active });
       };
     }
   }, {
     key: 'renderYours',
-    value: function renderYours() {
-      var yourRequests = this.props.yourRequests;
+    value: function renderYours(aproved, notAproved) {
+      var _this3 = this;
 
-      return yourRequests.map(function (book) {
-        return _react2.default.createElement(
-          'div',
-          { key: book._id },
-          book.title
-        );
-      });
+      return _react2.default.createElement(
+        'div',
+        null,
+        notAproved.map(function (book) {
+          return _react2.default.createElement(
+            'div',
+            { key: book._id },
+            book.title,
+            _react2.default.createElement(
+              'button',
+              { onClick: _this3.hundleCancel(book._id) },
+              'Cancel'
+            )
+          );
+        }),
+        aproved.length > 0 ? _react2.default.createElement(
+          'h3',
+          null,
+          'Approved:'
+        ) : null,
+        aproved.map(function (book) {
+          return _react2.default.createElement(
+            'div',
+            { key: book._id },
+            book.title,
+            _react2.default.createElement(
+              'button',
+              { onClick: _this3.hundleCancel(book._id) },
+              'Cancel'
+            )
+          );
+        })
+      );
+    }
+  }, {
+    key: 'hundleAprove',
+    value: function hundleAprove(_id) {
+      var _this4 = this;
+
+      return function () {
+        _this4.props.aproveTrade(_id);
+      };
+    }
+  }, {
+    key: 'hundleCancel',
+    value: function hundleCancel(_id) {
+      var _this5 = this;
+
+      return function () {
+        _this5.props.cancelTrade(_id);
+      };
     }
   }, {
     key: 'renderForYou',
-    value: function renderForYou() {
-      var forYourRequests = this.props.forYourRequests;
+    value: function renderForYou(aproved, notAproved) {
+      var _this6 = this;
 
-      return forYourRequests.map(function (book) {
-        return _react2.default.createElement(
-          'div',
-          { key: book._id },
-          book.title
-        );
-      });
+      return _react2.default.createElement(
+        'div',
+        null,
+        notAproved.map(function (book) {
+          return _react2.default.createElement(
+            'div',
+            { key: book._id },
+            book.title,
+            _react2.default.createElement(
+              'button',
+              { onClick: _this6.hundleCancel(book._id) },
+              'Cancel'
+            ),
+            _react2.default.createElement(
+              'button',
+              { onClick: _this6.hundleAprove(book._id) },
+              'Aprove'
+            )
+          );
+        }),
+        aproved.length > 0 ? _react2.default.createElement(
+          'h3',
+          null,
+          'Approved:'
+        ) : null,
+        aproved.map(function (book) {
+          return _react2.default.createElement(
+            'div',
+            { key: book._id },
+            book.title,
+            _react2.default.createElement(
+              'button',
+              { onClick: _this6.hundleCancel(book._id) },
+              'Cancel'
+            )
+          );
+        })
+      );
     }
   }, {
     key: 'render',
@@ -13063,6 +13162,18 @@ var TradePanel = function (_Component) {
           yourRequests = _props.yourRequests,
           forYourRequests = _props.forYourRequests;
 
+      var yourNotAproved = yourRequests.filter(function (book) {
+        return !book.trade.aproved;
+      });
+      var yourAproved = yourRequests.filter(function (book) {
+        return book.trade.aproved;
+      });
+      var forYourNotAproved = forYourRequests.filter(function (book) {
+        return !book.trade.aproved;
+      });
+      var forYourAproved = forYourRequests.filter(function (book) {
+        return book.trade.aproved;
+      });
       return _react2.default.createElement(
         'div',
         null,
@@ -13070,15 +13181,19 @@ var TradePanel = function (_Component) {
           'button',
           { onClick: this.setActive('yours') },
           'Your trade requests: ',
+          yourNotAproved.length,
+          '/',
           yourRequests.length
         ),
         _react2.default.createElement(
           'button',
           { onClick: this.setActive('forYou') },
           'Trade requests for you: ',
+          forYourNotAproved.length,
+          '/',
           forYourRequests.length
         ),
-        active ? active == 'yours' ? this.renderYours() : this.renderForYou() : null
+        active ? active == 'yours' ? this.renderYours(yourAproved, yourNotAproved) : this.renderForYou(forYourAproved, forYourNotAproved) : null
       );
     }
   }]);
@@ -13093,7 +13208,7 @@ function mapStateToProps(_ref) {
   return { yourRequests: yourRequests, forYourRequests: forYourRequests };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { yourReq: _actions.yourReq, forYourReq: _actions.forYourReq })(TradePanel);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { yourReq: _actions.yourReq, forYourReq: _actions.forYourReq, cancelTrade: _actions.cancelTrade, aproveTrade: _actions.aproveTrade })(TradePanel);
 
 /***/ }),
 /* 187 */
@@ -47016,10 +47131,12 @@ var AllBooks = function (_Component) {
 
       var allBooks = this.props.allBooks;
 
+      var userID = this.props.user && this.props.user._id;
       return allBooks.map(function (book) {
         var title = book.title,
             thumbnail = book.thumbnail,
-            _id = book._id;
+            _id = book._id,
+            owner = book.owner;
 
         return _react2.default.createElement(
           'div',
@@ -47030,11 +47147,11 @@ var AllBooks = function (_Component) {
             title
           ),
           _react2.default.createElement('img', { src: thumbnail }),
-          _react2.default.createElement(
+          userID != owner ? _react2.default.createElement(
             'button',
             { onClick: _this3.hundleTrade(_id) },
             'trade'
-          )
+          ) : null
         );
       });
     }
@@ -47059,9 +47176,10 @@ var AllBooks = function (_Component) {
 }(_react.Component);
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var allBooks = _ref.allBooks;
+  var allBooks = _ref.allBooks,
+      user = _ref.user;
 
-  return { allBooks: allBooks };
+  return { allBooks: allBooks, user: user };
 };
 exports.default = (0, _reactRedux.connect)(mapStateToProps, { getAllBooks: _actions.getAllBooks, trade: _actions.trade })(AllBooks);
 
@@ -48939,8 +49057,14 @@ var allBooks = function allBooks() {
       });
     case _consts.TRADE_BOOK:
       return state.filter(function (book) {
-        return book._id != action._id;
+        return book._id != action.book._id;
       });
+    case _consts.CANCEL_TRADE:
+      {
+        var book = action.book;
+
+        return [].concat(_toConsumableArray(state), [Object.assign({}, book)]);
+      }
     default:
       return state;
   }
@@ -48973,6 +49097,18 @@ var yourRequests = function yourRequests() {
   switch (action.type) {
     case _consts.GET_YOUR_REQUESTS:
       return action.books;
+    case _consts.CANCEL_TRADE:
+      {
+        var _id = action.book._id;
+
+        return state.filter(function (book) {
+          return book._id != _id;
+        });
+      }
+    case _consts.TRADE_BOOK:
+      var book = action.book;
+
+      return [].concat(_toConsumableArray(state), [Object.assign({}, book)]);
     default:
       return state;
   }
@@ -48985,6 +49121,23 @@ var forYourRequests = function forYourRequests() {
   switch (action.type) {
     case _consts.GET_FOR_YOUR_REQUESTS:
       return action.books;
+    case _consts.CANCEL_TRADE:
+      {
+        var _id = action.book._id;
+
+        return state.filter(function (book) {
+          return book._id != _id;
+        });
+      }
+    case _consts.APROVE_TRADE:
+      {
+        var _id = action.book._id;
+
+        return state.map(function (book) {
+          if (book._id != _id) return book;
+          return action.book;
+        });
+      }
     default:
       return state;
   }

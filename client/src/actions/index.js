@@ -10,7 +10,9 @@ import {
   DELETE_BOOK,
   TRADE_BOOK,
   GET_YOUR_REQUESTS,
-  GET_FOR_YOUR_REQUESTS
+  GET_FOR_YOUR_REQUESTS,
+  CANCEL_TRADE,
+  APROVE_TRADE
 } from '../consts.js'
 
 export const getCurrentUser = () => dispatch => {
@@ -99,8 +101,8 @@ export const deleteBook = (_id) => dispatch => {
 export const trade = (_id) => dispatch => {
   axios.put('/api/books/trade', {_id})
     .then(res => {
-      var {_id} = res.data.book
-      dispatch({type: TRADE_BOOK, _id})
+      var {book} = res.data
+      dispatch({type: TRADE_BOOK, book})
     })
 }
 
@@ -118,5 +120,21 @@ export const forYourReq = () => dispatch => {
     .then(res => {
       var {books} = res.data
       dispatch({type: GET_FOR_YOUR_REQUESTS, books})
+    })
+}
+
+export const cancelTrade = (_id) => dispatch => {
+  axios.put('/api/books/trade/delete', {_id})
+    .then(res => {
+      var {book} = res.data
+      dispatch({type: CANCEL_TRADE, book})
+    })
+}
+
+export const aproveTrade = (_id) => dispatch => {
+  axios.put('/api/books/trade/aprove', {_id})
+    .then(res => {
+      var {book} = res.data
+      dispatch({type: APROVE_TRADE, book})
     })
 }

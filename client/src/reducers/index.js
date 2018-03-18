@@ -7,7 +7,9 @@ import {
   DELETE_BOOK,
   TRADE_BOOK,
   GET_YOUR_REQUESTS,
-  GET_FOR_YOUR_REQUESTS
+  GET_FOR_YOUR_REQUESTS,
+  CANCEL_TRADE,
+  APROVE_TRADE
 } from '../consts.js'
 //import user from './user'
 
@@ -30,8 +32,12 @@ const allBooks = ( state = [], action) => {
       })
     case TRADE_BOOK:
       return state.filter( book => {
-        return book._id != action._id
+        return book._id != action.book._id
       })
+    case CANCEL_TRADE: {
+      var {book} = action
+      return [...state, Object.assign({}, book)]
+    }
     default:
       return state
   }
@@ -57,6 +63,15 @@ const yourRequests = ( state = [], action) => {
   switch (action.type) {
     case GET_YOUR_REQUESTS:
       return action.books
+    case CANCEL_TRADE: {
+      var {book: {_id}} = action
+      return state.filter( book => {
+        return book._id != _id
+      })
+    }
+    case TRADE_BOOK:
+      var {book} = action
+      return [...state, Object.assign({}, book)]
     default:
       return state
   }
@@ -66,6 +81,19 @@ const forYourRequests = ( state = [], action) => {
   switch (action.type) {
     case GET_FOR_YOUR_REQUESTS:
       return action.books
+    case CANCEL_TRADE: {
+      var {book: {_id}} = action
+      return state.filter( book => {
+        return book._id != _id
+      })
+    }
+    case APROVE_TRADE: {
+      var {book: {_id}} = action
+      return state.map( book => {
+        if (book._id != _id) return book
+        return action.book
+      })
+    }
     default:
       return state
   }

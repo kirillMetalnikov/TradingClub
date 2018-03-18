@@ -75,6 +75,30 @@ function BooksHundler() {
       })
   }
 
+  this.tradeDelete = (req, res) => {
+    var {_id} = req.body
+    Book
+      .findByIdAndUpdate(_id, {$set: {trade: null}}, {new: true})
+      .exec( (err, book) => {
+        if (err) {
+          res.json({message: {type: 'error', text: err}})
+        }
+        res.json({book})
+      })
+  }
+
+  this.tradeAprove = (req, res) => {
+    var {_id} = req.body
+    Book
+      .findByIdAndUpdate(_id, {$set: {"trade.aproved": true}}, {new: true})
+      .exec( (err, book) => {
+        if (err) {
+          res.json({message: {type: 'error', text: err}})
+        }
+        res.json({book})
+      })
+  }
+
   this.forYouReq = (req, res) => {
     Book
       .find({owner: req.user._id, trade: { $ne: null }})
