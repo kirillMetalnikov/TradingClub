@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Card, Image, Button, Container} from 'semantic-ui-react'
 
 import {getAllBooks, trade} from '../actions'
 import TradePanel from './TradePanel'
@@ -25,23 +26,32 @@ class AllBooks extends Component {
     var userID = this.props.user && this.props.user._id
     return allBooks.map( book => {
       var {title, thumbnail, _id, owner} = book
+      thumbnail = thumbnail.replace('zoom=1', 'zoom=2')
       return (
-        <div className = 'book' key = {_id}>
-          <h5>{title}</h5>
-          <img src = {thumbnail} />
-          {userID != owner ? <button onClick={this.hundleTrade(_id)}>trade</button> : null}
-        </div>
+        <Card key = {_id}>
+          <Image src = {thumbnail} />
+          <Card.Content>
+          </Card.Content>
+          <Card.Content extra>
+            <Card.Description>{title}</Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+            <Button color = 'violet' onClick={this.hundleTrade(_id)} disabled = {userID == owner}>trade</Button>
+          </Card.Content>
+        </Card>
       )
     })
   }
 
   render() {
     return (
-      <div>
+      <Container>
         <h1>AllBooks</h1>
         <TradePanel />
-        {this.renderList()}
-      </div>
+        <Card.Group>
+          {this.renderList()}
+        </Card.Group>
+      </Container>
     )
   }
 }
