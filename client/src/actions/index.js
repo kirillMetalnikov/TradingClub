@@ -42,7 +42,7 @@ export const signUp = (name, email, password) => dispatch => {
           dispatch({type: MESSAGE_SIGNUP, signUpForm: {type: 'error', header: 'Error!', text: message.text}})
         }
         if (user) {
-          history.push('/yourbooks')
+          history.push('/your books')
           dispatch({type: GET_CURRENT_USER, user})
         }
       })
@@ -54,7 +54,7 @@ export const login = (email, password) => dispatch => {
   axios.post('/auth/login', qs.stringify({username: email, password}))
     .then(res => {
       var {user} = res.data
-      if (user) history.push('/yourbooks')
+      if (user) history.push('/your books')
       dispatch({type: GET_CURRENT_USER, user})
       dispatch({type: MESSAGE_LOGIN, loginForm: null})
     })

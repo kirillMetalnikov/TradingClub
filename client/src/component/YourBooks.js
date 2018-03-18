@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Card, Image, Button, Container} from 'semantic-ui-react'
+import {Card, Image, Button, Container, Divider, Input, Segment} from 'semantic-ui-react'
 
 import {addBook, getYourBooks, deleteBook} from '../actions'
 import TradePanel from './TradePanel'
@@ -58,15 +58,23 @@ class YourBooks extends Component {
   render() {
     return (
       <Container>
-        <h1>YourBooks</h1>
-        <TradePanel />
-        <form onSubmit = {this.hundleSubmit.bind(this)}>
-          <input onChange = {this.hundleChange.bind(this)} placeholder = 'enter name book' value = {this.state.inputValue}/>
-          <button type = 'submit'>Add</button>
-        </form>
-        <Card.Group>
-          {this.renderList()}
-        </Card.Group>
+        <Segment.Group>
+          <Segment><TradePanel /></Segment>
+          <Segment  textAlign='right'>
+            <form onSubmit = {this.hundleSubmit.bind(this)}>
+              <Input type='text'  placeholder = 'enter name book' action>
+                <input onChange = {this.hundleChange.bind(this)} value = {this.state.inputValue}/>
+                <Button type='submit' color = 'violet'>Add</Button>
+              </Input>
+            </form>
+          </Segment>
+          <Segment>
+            <h2>Your books:</h2>
+            <Card.Group>
+              {this.renderList()}
+            </Card.Group>
+          </Segment>
+        </Segment.Group>
       </Container>
     )
   }

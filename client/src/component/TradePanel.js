@@ -1,13 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Tab, Label, Menu, List, Button, Segment, Divider} from 'semantic-ui-react'
 
 import {yourReq, forYourReq, cancelTrade, aproveTrade} from '../actions'
 
 class TradePanel extends Component {
   constructor(props) {
     super(props)
-    this.state = {active: null}
-    this.setActive = this.setActive.bind(this)
   }
 
   componentWillMount() {
@@ -15,34 +14,48 @@ class TradePanel extends Component {
     this.props.forYourReq()
   }
 
-  setActive(active) {
-    return () => {
-      this.props.yourReq()
-      this.props.forYourReq()
-      this.setState({active})
-    }
-  }
-
   renderYours(aproved, notAproved) {
     return (
       <div>
-        {notAproved.map( book => {
-          return (
-            <div key = {book._id}>
-              {book.title}
-              <button onClick ={this.hundleCancel(book._id)}>Cancel</button>
-            </div>
-          )
-        })}
-        {aproved.length > 0 ? <h3>Approved:</h3> : null}
-        {aproved.map( book => {
-          return (
-            <div key = {book._id}>
-              {book.title}
-              <button onClick ={this.hundleCancel(book._id)}>Cancel</button>
-            </div>
-          )
-        })}
+        <Segment hidden = {notAproved.length != 0 || aproved.length != 0}>
+          <h3>You do not make a trade request</h3>
+        </Segment>
+        <Segment hidden = {notAproved.length == 0}>
+          <h3>Not approved:</h3>
+          <Divider/>
+          <List divided relaxed>
+            {notAproved.map( book => {
+              return (
+                <List.Item key = {book._id}>
+                  <List.Content floated='right'>
+                    <Button onClick ={this.hundleCancel(book._id)} color = 'orange'>Cancel</Button>
+                  </List.Content>
+                  <List.Content>
+                    {book.title}
+                  </List.Content>
+                </List.Item>
+              )
+            })}
+          </List>
+        </Segment>
+        <Segment hidden = {aproved.length == 0}>
+          <h3>Approved:</h3>
+          <Divider/>
+          <List divided relaxed>
+            {aproved.map( book => {
+              return (
+                <List.Item key = {book._id}>
+                  <List.Content floated='right'>
+                    <Button onClick ={this.hundleCancel(book._id)} color = 'orange'>Cancel</Button>
+                  </List.Content>
+                  <List.Content>
+                    {book.title}
+                  </List.Content>
+                </List.Item>
+              )
+            })}
+          </List>
+        </Segment>
       </div>
     )
   }
@@ -58,33 +71,59 @@ class TradePanel extends Component {
     }
   }
 
+  hundleTabChange() {
+    this.props.yourReq()
+    this.props.forYourReq()
+  }
+
   renderForYou(aproved, notAproved) {
     return (
       <div>
-        {notAproved.map( book => {
-          return (
-            <div key = {book._id}>
-              {book.title}
-              <button onClick ={this.hundleCancel(book._id)}>Cancel</button>
-              <button onClick ={this.hundleAprove(book._id)}>Aprove</button>
-            </div>
-          )
-        })}
-        {aproved.length > 0 ? <h3>Approved:</h3> : null}
-        {aproved.map( book => {
-          return (
-            <div key = {book._id}>
-              {book.title}
-              <button onClick ={this.hundleCancel(book._id)}>Cancel</button>
-            </div>
-          )
-        })}
+        <Segment hidden = {notAproved.length != 0 || aproved.length != 0}>
+          <h3>You have no trade requests</h3>
+        </Segment>
+        <Segment hidden = {notAproved.length == 0}>
+          <h3>Not approved:</h3>
+          <Divider/>
+          <List divided relaxed>
+            {notAproved.map( book => {
+              return (
+                <List.Item key = {book._id}>
+                  <List.Content floated='right'>
+                    <Button onClick ={this.hundleAprove(book._id)} color = 'violet'>Aprove</Button>
+                    <Button onClick ={this.hundleCancel(book._id)} color = 'orange'>Cancel</Button>
+                  </List.Content>
+                  <List.Content>
+                    {book.title}
+                  </List.Content>
+                </List.Item>
+              )
+            })}
+          </List>
+        </Segment>
+        <Segment hidden = {aproved.length == 0}>
+          <h3>Approved:</h3>
+          <Divider/>
+          <List divided relaxed>
+            {aproved.map( book => {
+              return (
+                <List.Item key = {book._id}>
+                  <List.Content floated='right'>
+                    <Button onClick ={this.hundleCancel(book._id)} color = 'orange'>Cancel</Button>
+                  </List.Content>
+                  <List.Content>
+                    {book.title}
+                  </List.Content>
+                </List.Item>
+              )
+            })}
+          </List>
+        </Segment>
       </div>
     )
   }
 
   render() {
-    var {active} = this.state
     var {yourRequests, forYourRequests} = this.props
     var yourNotAproved = yourRequests.filter( book => {
       return !book.trade.aproved
@@ -98,16 +137,20 @@ class TradePanel extends Component {
     var forYourAproved = forYourRequests.filter( book => {
       return book.trade.aproved
     })
+    const panes = [
+      { menuItem: <Menu.Item key='yourTrade'>Your trade requests: <Label color='violet'>{yourNotAproved.length}/{yourRequests.length}</Label></Menu.Item>,
+        render: () => {
+          return <Tab.Pane>{this.renderYours(yourAproved, yourNotAproved)}</Tab.Pane>
+        }
+      },
+      { menuItem: <Menu.Item key='foryourTrade'>Trade requests for you: <Label color='violet'>{forYourNotAproved.length}/{forYourRequests.length}</Label></Menu.Item>,
+        render: () => {
+          return <Tab.Pane>{this.renderForYou(forYourAproved, forYourNotAproved)}</Tab.Pane>
+        }
+      },
+    ]
     return (
-      <div>
-        <button onClick = {this.setActive('yours')}>Your trade requests: {yourNotAproved.length}/{yourRequests.length}</button>
-        <button onClick = {this.setActive('forYou')}>Trade requests for you: {forYourNotAproved.length}/{forYourRequests.length}</button>
-        {active
-          ? active == 'yours'
-            ? this.renderYours(yourAproved, yourNotAproved)
-            : this.renderForYou(forYourAproved, forYourNotAproved)
-          : null}
-      </div>
+      <Tab panes={panes} onTabChange = {this.hundleTabChange.bind(this)}/>
     )
   }
 }

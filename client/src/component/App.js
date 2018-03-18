@@ -29,8 +29,8 @@ class App extends Component {
             <Header />
             <Switch>
               <Route exact path ='/' component={Home} />
-              <Route exact path ='/allbooks' component={AllBooks} />
-              <Route exact path='/yourbooks' component={YourBooks} />
+              <Route exact path ='/all books' component={AllBooks} />
+              <Route exact path='/your books' component={YourBooks} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/signup' component={SignUp} />
               <Route exact path='/profile' component={Profile} />

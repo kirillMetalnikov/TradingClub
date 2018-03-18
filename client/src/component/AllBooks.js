@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Card, Image, Button, Container} from 'semantic-ui-react'
+import {Card, Image, Button, Container, Divider, Segment} from 'semantic-ui-react'
 
 import {getAllBooks, trade} from '../actions'
 import TradePanel from './TradePanel'
@@ -46,11 +46,15 @@ class AllBooks extends Component {
   render() {
     return (
       <Container>
-        <h1>AllBooks</h1>
-        <TradePanel />
-        <Card.Group>
-          {this.renderList()}
-        </Card.Group>
+        <Segment.Group>
+          <Segment><TradePanel /></Segment>
+          <Segment>
+            <h2>All books:</h2>
+            <Card.Group>
+              {this.renderList()}
+            </Card.Group>
+          </Segment>
+        </Segment.Group>
       </Container>
     )
   }

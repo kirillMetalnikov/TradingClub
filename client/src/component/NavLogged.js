@@ -28,8 +28,8 @@ class NavLogged extends Component {
       <Menu size='large' pointing secondary color='violet' inverted>
         <Container>
           <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-          <Menu.Item name='allbooks' active={activeItem === 'allbooks'} onClick={this.handleItemClick} />
-          <Menu.Item name='yourbooks' active={activeItem === 'yourbooks'} onClick={this.handleItemClick} />
+          <Menu.Item name='all books' active={activeItem === 'all books'} onClick={this.handleItemClick} />
+          <Menu.Item name='your books' active={activeItem === 'your books'} onClick={this.handleItemClick} />
 
           <Menu.Menu position='right'>
             <Menu.Item header>Hello, {this.props.user.name}</Menu.Item>
