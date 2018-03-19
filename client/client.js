@@ -751,7 +751,7 @@ module.exports = isArray;
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(35),
+var arrayMap = __webpack_require__(36),
     baseIteratee = __webpack_require__(25),
     baseMap = __webpack_require__(314),
     isArray = __webpack_require__(14);
@@ -1078,7 +1078,7 @@ module.exports = keys;
 
 var baseMatches = __webpack_require__(575),
     baseMatchesProperty = __webpack_require__(588),
-    identity = __webpack_require__(36),
+    identity = __webpack_require__(37),
     isArray = __webpack_require__(14),
     property = __webpack_require__(590);
 
@@ -1681,386 +1681,6 @@ module.exports = toString;
 
 /***/ }),
 /* 35 */
-/***/ (function(module, exports) {
-
-/**
- * A specialized version of `_.map` for arrays without support for iteratee
- * shorthands.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the new mapped array.
- */
-function arrayMap(array, iteratee) {
-  var index = -1,
-      length = array == null ? 0 : array.length,
-      result = Array(length);
-
-  while (++index < length) {
-    result[index] = iteratee(array[index], index, array);
-  }
-  return result;
-}
-
-module.exports = arrayMap;
-
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports) {
-
-/**
- * This method returns the first argument it receives.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Util
- * @param {*} value Any value.
- * @returns {*} Returns `value`.
- * @example
- *
- * var object = { 'a': 1 };
- *
- * console.log(_.identity(object) === object);
- * // => true
- */
-function identity(value) {
-  return value;
-}
-
-module.exports = identity;
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toFinite = __webpack_require__(176);
-
-/**
- * Converts `value` to an integer.
- *
- * **Note:** This method is loosely based on
- * [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger).
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to convert.
- * @returns {number} Returns the converted integer.
- * @example
- *
- * _.toInteger(3.2);
- * // => 3
- *
- * _.toInteger(Number.MIN_VALUE);
- * // => 0
- *
- * _.toInteger(Infinity);
- * // => 1.7976931348623157e+308
- *
- * _.toInteger('3.2');
- * // => 3
- */
-function toInteger(value) {
-  var result = toFinite(value),
-      remainder = result % 1;
-
-  return result === result ? (remainder ? result - remainder : result) : 0;
-}
-
-module.exports = toInteger;
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var baseIndexOf = __webpack_require__(107),
-    isArrayLike = __webpack_require__(27),
-    isString = __webpack_require__(127),
-    toInteger = __webpack_require__(37),
-    values = __webpack_require__(68);
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max;
-
-/**
- * Checks if `value` is in `collection`. If `collection` is a string, it's
- * checked for a substring of `value`, otherwise
- * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
- * is used for equality comparisons. If `fromIndex` is negative, it's used as
- * the offset from the end of `collection`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Collection
- * @param {Array|Object|string} collection The collection to inspect.
- * @param {*} value The value to search for.
- * @param {number} [fromIndex=0] The index to search from.
- * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
- * @returns {boolean} Returns `true` if `value` is found, else `false`.
- * @example
- *
- * _.includes([1, 2, 3], 1);
- * // => true
- *
- * _.includes([1, 2, 3], 1, 2);
- * // => false
- *
- * _.includes({ 'a': 1, 'b': 2 }, 1);
- * // => true
- *
- * _.includes('abcd', 'bc');
- * // => true
- */
-function includes(collection, value, fromIndex, guard) {
-  collection = isArrayLike(collection) ? collection : values(collection);
-  fromIndex = (fromIndex && !guard) ? toInteger(fromIndex) : 0;
-
-  var length = collection.length;
-  if (fromIndex < 0) {
-    fromIndex = nativeMax(length + fromIndex, 0);
-  }
-  return isString(collection)
-    ? (fromIndex <= length && collection.indexOf(value, fromIndex) > -1)
-    : (!!length && baseIndexOf(collection, value, fromIndex) > -1);
-}
-
-module.exports = includes;
-
-
-/***/ }),
-/* 39 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_get__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_get___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash_get__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_isNil__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_isNil___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash_isNil__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__lib__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_Checkbox__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__addons_Radio__ = __webpack_require__(199);
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * A field is a form element containing a label and an input.
- * @see Form
- * @see Button
- * @see Checkbox
- * @see Dropdown
- * @see Input
- * @see Radio
- * @see Select
- * @see Visibility
- */
-function FormField(props) {
-  var children = props.children,
-      className = props.className,
-      content = props.content,
-      control = props.control,
-      disabled = props.disabled,
-      error = props.error,
-      inline = props.inline,
-      label = props.label,
-      required = props.required,
-      type = props.type,
-      width = props.width;
-
-
-  var classes = __WEBPACK_IMPORTED_MODULE_3_classnames___default()(Object(__WEBPACK_IMPORTED_MODULE_6__lib__["C" /* useKeyOnly */])(disabled, 'disabled'), Object(__WEBPACK_IMPORTED_MODULE_6__lib__["C" /* useKeyOnly */])(error, 'error'), Object(__WEBPACK_IMPORTED_MODULE_6__lib__["C" /* useKeyOnly */])(inline, 'inline'), Object(__WEBPACK_IMPORTED_MODULE_6__lib__["C" /* useKeyOnly */])(required, 'required'), Object(__WEBPACK_IMPORTED_MODULE_6__lib__["I" /* useWidthProp */])(width, 'wide'), 'field', className);
-  var rest = Object(__WEBPACK_IMPORTED_MODULE_6__lib__["s" /* getUnhandledProps */])(FormField, props);
-  var ElementType = Object(__WEBPACK_IMPORTED_MODULE_6__lib__["r" /* getElementType */])(FormField, props);
-
-  // ----------------------------------------
-  // No Control
-  // ----------------------------------------
-
-  if (__WEBPACK_IMPORTED_MODULE_2_lodash_isNil___default()(control)) {
-    if (__WEBPACK_IMPORTED_MODULE_2_lodash_isNil___default()(label)) {
-      return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
-        ElementType,
-        __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, rest, { className: classes }),
-        __WEBPACK_IMPORTED_MODULE_6__lib__["d" /* childrenUtils */].isNil(children) ? content : children
-      );
-    }
-
-    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
-      ElementType,
-      __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, rest, { className: classes }),
-      Object(__WEBPACK_IMPORTED_MODULE_6__lib__["i" /* createHTMLLabel */])(label)
-    );
-  }
-
-  // ----------------------------------------
-  // Checkbox/Radio Control
-  // ----------------------------------------
-  var controlProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, rest, { content: content, children: children, disabled: disabled, required: required, type: type
-
-    // wrap HTML checkboxes/radios in the label
-  });if (control === 'input' && (type === 'checkbox' || type === 'radio')) {
-    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
-      ElementType,
-      { className: classes },
-      __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
-        'label',
-        null,
-        Object(__WEBPACK_IMPORTED_MODULE_5_react__["createElement"])(control, controlProps),
-        ' ',
-        label
-      )
-    );
-  }
-
-  // pass label prop to controls that support it
-  if (control === __WEBPACK_IMPORTED_MODULE_7__modules_Checkbox__["a" /* default */] || control === __WEBPACK_IMPORTED_MODULE_8__addons_Radio__["a" /* default */]) {
-    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
-      ElementType,
-      { className: classes },
-      Object(__WEBPACK_IMPORTED_MODULE_5_react__["createElement"])(control, __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, controlProps, { label: label }))
-    );
-  }
-
-  // ----------------------------------------
-  // Other Control
-  // ----------------------------------------
-
-  return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
-    ElementType,
-    { className: classes },
-    Object(__WEBPACK_IMPORTED_MODULE_6__lib__["i" /* createHTMLLabel */])(label, { defaultProps: {
-        htmlFor: __WEBPACK_IMPORTED_MODULE_1_lodash_get___default()(controlProps, 'id') }
-    }),
-    Object(__WEBPACK_IMPORTED_MODULE_5_react__["createElement"])(control, controlProps)
-  );
-}
-
-FormField.handledProps = ['as', 'children', 'className', 'content', 'control', 'disabled', 'error', 'inline', 'label', 'required', 'type', 'width'];
-FormField._meta = {
-  name: 'FormField',
-  parent: 'Form',
-  type: __WEBPACK_IMPORTED_MODULE_6__lib__["b" /* META */].TYPES.COLLECTION
-};
-
-FormField.propTypes = process.env.NODE_ENV !== "production" ? {
-  /** An element type to render as (string or function). */
-  as: __WEBPACK_IMPORTED_MODULE_6__lib__["n" /* customPropTypes */].as,
-
-  /** Primary content. */
-  children: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.node,
-
-  /** Additional classes. */
-  className: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string,
-
-  /** Shorthand for primary content. */
-  content: __WEBPACK_IMPORTED_MODULE_6__lib__["n" /* customPropTypes */].contentShorthand,
-
-  /**
-   * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input').
-   * Extra FormField props are passed to the control component.
-   * Mutually exclusive with children.
-   */
-  control: __WEBPACK_IMPORTED_MODULE_6__lib__["n" /* customPropTypes */].some([__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func, __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOf(['button', 'input', 'select', 'textarea'])]),
-
-  /** Individual fields may be disabled. */
-  disabled: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.bool,
-
-  /** Individual fields may display an error state. */
-  error: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.bool,
-
-  /** A field can have its label next to instead of above it. */
-  inline: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.bool,
-
-  // Heads Up!
-  // Do not disallow children with `label` shorthand
-  // The `control` might accept a `label` prop and `children`
-  /** Mutually exclusive with children. */
-  label: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.object]),
-
-  /** A field can show that input is mandatory. */
-  required: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.bool,
-
-  /** Passed to the control component (i.e. <input type='password' />) */
-  type: __WEBPACK_IMPORTED_MODULE_6__lib__["n" /* customPropTypes */].every([__WEBPACK_IMPORTED_MODULE_6__lib__["n" /* customPropTypes */].demand(['control'])]
-  // don't strictly validate HTML types
-  // a control might be passed that uses a `type` prop with unknown values
-  // let the control validate if for us
-  ),
-
-  /** A field can specify its width in grid columns */
-  width: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOf(__WEBPACK_IMPORTED_MODULE_6__lib__["c" /* SUI */].WIDTHS)
-} : {};
-
-/* harmony default export */ __webpack_exports__["a"] = (FormField);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * 
- */
-
-function makeEmptyFunction(arg) {
-  return function () {
-    return arg;
-  };
-}
-
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-var emptyFunction = function emptyFunction() {};
-
-emptyFunction.thatReturns = makeEmptyFunction;
-emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-emptyFunction.thatReturnsThis = function () {
-  return this;
-};
-emptyFunction.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-module.exports = emptyFunction;
-
-/***/ }),
-/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2103,7 +1723,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "FormCheckbox", function() { return __WEBPACK_IMPORTED_MODULE_17__collections_Form_FormCheckbox__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__collections_Form_FormDropdown__ = __webpack_require__(367);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "FormDropdown", function() { return __WEBPACK_IMPORTED_MODULE_18__collections_Form_FormDropdown__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__collections_Form_FormField__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__collections_Form_FormField__ = __webpack_require__(40);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "FormField", function() { return __WEBPACK_IMPORTED_MODULE_19__collections_Form_FormField__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__collections_Form_FormGroup__ = __webpack_require__(368);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "FormGroup", function() { return __WEBPACK_IMPORTED_MODULE_20__collections_Form_FormGroup__["a"]; });
@@ -2580,6 +2200,386 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
+/* 36 */
+/***/ (function(module, exports) {
+
+/**
+ * A specialized version of `_.map` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function arrayMap(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length,
+      result = Array(length);
+
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+
+module.exports = arrayMap;
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+/**
+ * This method returns the first argument it receives.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Util
+ * @param {*} value Any value.
+ * @returns {*} Returns `value`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ *
+ * console.log(_.identity(object) === object);
+ * // => true
+ */
+function identity(value) {
+  return value;
+}
+
+module.exports = identity;
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toFinite = __webpack_require__(176);
+
+/**
+ * Converts `value` to an integer.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {number} Returns the converted integer.
+ * @example
+ *
+ * _.toInteger(3.2);
+ * // => 3
+ *
+ * _.toInteger(Number.MIN_VALUE);
+ * // => 0
+ *
+ * _.toInteger(Infinity);
+ * // => 1.7976931348623157e+308
+ *
+ * _.toInteger('3.2');
+ * // => 3
+ */
+function toInteger(value) {
+  var result = toFinite(value),
+      remainder = result % 1;
+
+  return result === result ? (remainder ? result - remainder : result) : 0;
+}
+
+module.exports = toInteger;
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseIndexOf = __webpack_require__(107),
+    isArrayLike = __webpack_require__(27),
+    isString = __webpack_require__(127),
+    toInteger = __webpack_require__(38),
+    values = __webpack_require__(68);
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max;
+
+/**
+ * Checks if `value` is in `collection`. If `collection` is a string, it's
+ * checked for a substring of `value`, otherwise
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * is used for equality comparisons. If `fromIndex` is negative, it's used as
+ * the offset from the end of `collection`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Collection
+ * @param {Array|Object|string} collection The collection to inspect.
+ * @param {*} value The value to search for.
+ * @param {number} [fromIndex=0] The index to search from.
+ * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
+ * @returns {boolean} Returns `true` if `value` is found, else `false`.
+ * @example
+ *
+ * _.includes([1, 2, 3], 1);
+ * // => true
+ *
+ * _.includes([1, 2, 3], 1, 2);
+ * // => false
+ *
+ * _.includes({ 'a': 1, 'b': 2 }, 1);
+ * // => true
+ *
+ * _.includes('abcd', 'bc');
+ * // => true
+ */
+function includes(collection, value, fromIndex, guard) {
+  collection = isArrayLike(collection) ? collection : values(collection);
+  fromIndex = (fromIndex && !guard) ? toInteger(fromIndex) : 0;
+
+  var length = collection.length;
+  if (fromIndex < 0) {
+    fromIndex = nativeMax(length + fromIndex, 0);
+  }
+  return isString(collection)
+    ? (fromIndex <= length && collection.indexOf(value, fromIndex) > -1)
+    : (!!length && baseIndexOf(collection, value, fromIndex) > -1);
+}
+
+module.exports = includes;
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_get__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_get___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash_get__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_isNil__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_isNil___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash_isNil__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_classnames__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__lib__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_Checkbox__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__addons_Radio__ = __webpack_require__(199);
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * A field is a form element containing a label and an input.
+ * @see Form
+ * @see Button
+ * @see Checkbox
+ * @see Dropdown
+ * @see Input
+ * @see Radio
+ * @see Select
+ * @see Visibility
+ */
+function FormField(props) {
+  var children = props.children,
+      className = props.className,
+      content = props.content,
+      control = props.control,
+      disabled = props.disabled,
+      error = props.error,
+      inline = props.inline,
+      label = props.label,
+      required = props.required,
+      type = props.type,
+      width = props.width;
+
+
+  var classes = __WEBPACK_IMPORTED_MODULE_3_classnames___default()(Object(__WEBPACK_IMPORTED_MODULE_6__lib__["C" /* useKeyOnly */])(disabled, 'disabled'), Object(__WEBPACK_IMPORTED_MODULE_6__lib__["C" /* useKeyOnly */])(error, 'error'), Object(__WEBPACK_IMPORTED_MODULE_6__lib__["C" /* useKeyOnly */])(inline, 'inline'), Object(__WEBPACK_IMPORTED_MODULE_6__lib__["C" /* useKeyOnly */])(required, 'required'), Object(__WEBPACK_IMPORTED_MODULE_6__lib__["I" /* useWidthProp */])(width, 'wide'), 'field', className);
+  var rest = Object(__WEBPACK_IMPORTED_MODULE_6__lib__["s" /* getUnhandledProps */])(FormField, props);
+  var ElementType = Object(__WEBPACK_IMPORTED_MODULE_6__lib__["r" /* getElementType */])(FormField, props);
+
+  // ----------------------------------------
+  // No Control
+  // ----------------------------------------
+
+  if (__WEBPACK_IMPORTED_MODULE_2_lodash_isNil___default()(control)) {
+    if (__WEBPACK_IMPORTED_MODULE_2_lodash_isNil___default()(label)) {
+      return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+        ElementType,
+        __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, rest, { className: classes }),
+        __WEBPACK_IMPORTED_MODULE_6__lib__["d" /* childrenUtils */].isNil(children) ? content : children
+      );
+    }
+
+    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+      ElementType,
+      __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, rest, { className: classes }),
+      Object(__WEBPACK_IMPORTED_MODULE_6__lib__["i" /* createHTMLLabel */])(label)
+    );
+  }
+
+  // ----------------------------------------
+  // Checkbox/Radio Control
+  // ----------------------------------------
+  var controlProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, rest, { content: content, children: children, disabled: disabled, required: required, type: type
+
+    // wrap HTML checkboxes/radios in the label
+  });if (control === 'input' && (type === 'checkbox' || type === 'radio')) {
+    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+      ElementType,
+      { className: classes },
+      __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+        'label',
+        null,
+        Object(__WEBPACK_IMPORTED_MODULE_5_react__["createElement"])(control, controlProps),
+        ' ',
+        label
+      )
+    );
+  }
+
+  // pass label prop to controls that support it
+  if (control === __WEBPACK_IMPORTED_MODULE_7__modules_Checkbox__["a" /* default */] || control === __WEBPACK_IMPORTED_MODULE_8__addons_Radio__["a" /* default */]) {
+    return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+      ElementType,
+      { className: classes },
+      Object(__WEBPACK_IMPORTED_MODULE_5_react__["createElement"])(control, __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, controlProps, { label: label }))
+    );
+  }
+
+  // ----------------------------------------
+  // Other Control
+  // ----------------------------------------
+
+  return __WEBPACK_IMPORTED_MODULE_5_react___default.a.createElement(
+    ElementType,
+    { className: classes },
+    Object(__WEBPACK_IMPORTED_MODULE_6__lib__["i" /* createHTMLLabel */])(label, { defaultProps: {
+        htmlFor: __WEBPACK_IMPORTED_MODULE_1_lodash_get___default()(controlProps, 'id') }
+    }),
+    Object(__WEBPACK_IMPORTED_MODULE_5_react__["createElement"])(control, controlProps)
+  );
+}
+
+FormField.handledProps = ['as', 'children', 'className', 'content', 'control', 'disabled', 'error', 'inline', 'label', 'required', 'type', 'width'];
+FormField._meta = {
+  name: 'FormField',
+  parent: 'Form',
+  type: __WEBPACK_IMPORTED_MODULE_6__lib__["b" /* META */].TYPES.COLLECTION
+};
+
+FormField.propTypes = process.env.NODE_ENV !== "production" ? {
+  /** An element type to render as (string or function). */
+  as: __WEBPACK_IMPORTED_MODULE_6__lib__["n" /* customPropTypes */].as,
+
+  /** Primary content. */
+  children: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.node,
+
+  /** Additional classes. */
+  className: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string,
+
+  /** Shorthand for primary content. */
+  content: __WEBPACK_IMPORTED_MODULE_6__lib__["n" /* customPropTypes */].contentShorthand,
+
+  /**
+   * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input').
+   * Extra FormField props are passed to the control component.
+   * Mutually exclusive with children.
+   */
+  control: __WEBPACK_IMPORTED_MODULE_6__lib__["n" /* customPropTypes */].some([__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func, __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOf(['button', 'input', 'select', 'textarea'])]),
+
+  /** Individual fields may be disabled. */
+  disabled: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.bool,
+
+  /** Individual fields may display an error state. */
+  error: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.bool,
+
+  /** A field can have its label next to instead of above it. */
+  inline: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.bool,
+
+  // Heads Up!
+  // Do not disallow children with `label` shorthand
+  // The `control` might accept a `label` prop and `children`
+  /** Mutually exclusive with children. */
+  label: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.node, __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.object]),
+
+  /** A field can show that input is mandatory. */
+  required: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.bool,
+
+  /** Passed to the control component (i.e. <input type='password' />) */
+  type: __WEBPACK_IMPORTED_MODULE_6__lib__["n" /* customPropTypes */].every([__WEBPACK_IMPORTED_MODULE_6__lib__["n" /* customPropTypes */].demand(['control'])]
+  // don't strictly validate HTML types
+  // a control might be passed that uses a `type` prop with unknown values
+  // let the control validate if for us
+  ),
+
+  /** A field can specify its width in grid columns */
+  width: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOf(__WEBPACK_IMPORTED_MODULE_6__lib__["c" /* SUI */].WIDTHS)
+} : {};
+
+/* harmony default export */ __webpack_exports__["a"] = (FormField);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * 
+ */
+
+function makeEmptyFunction(arg) {
+  return function () {
+    return arg;
+  };
+}
+
+/**
+ * This function accepts and discards inputs; it has no side effects. This is
+ * primarily useful idiomatically for overridable function endpoints which
+ * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+ */
+var emptyFunction = function emptyFunction() {};
+
+emptyFunction.thatReturns = makeEmptyFunction;
+emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+emptyFunction.thatReturnsThis = function () {
+  return this;
+};
+emptyFunction.thatReturnsArgument = function (arg) {
+  return arg;
+};
+
+module.exports = emptyFunction;
+
+/***/ }),
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2725,7 +2725,7 @@ module.exports = has;
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var identity = __webpack_require__(36),
+var identity = __webpack_require__(37),
     overRest = __webpack_require__(265),
     setToString = __webpack_require__(172);
 
@@ -4301,7 +4301,7 @@ module.exports = emptyObject;
 
 
 
-var emptyFunction = __webpack_require__(40);
+var emptyFunction = __webpack_require__(41);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -4618,7 +4618,7 @@ module.exports = getMapData;
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(54),
-    arrayMap = __webpack_require__(35),
+    arrayMap = __webpack_require__(36),
     isArray = __webpack_require__(14),
     isSymbol = __webpack_require__(53);
 
@@ -5309,7 +5309,7 @@ var baseSetData = __webpack_require__(294),
     mergeData = __webpack_require__(634),
     setData = __webpack_require__(303),
     setWrapToString = __webpack_require__(304),
-    toInteger = __webpack_require__(37);
+    toInteger = __webpack_require__(38);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -10928,7 +10928,7 @@ module.exports = ExecutionEnvironment;
  * @typechecks
  */
 
-var emptyFunction = __webpack_require__(40);
+var emptyFunction = __webpack_require__(41);
 
 /**
  * Upstream version of event listener. Does not take into account specific
@@ -12515,7 +12515,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(22);
 
-var _semanticUiReact = __webpack_require__(41);
+var _semanticUiReact = __webpack_require__(35);
 
 var _history = __webpack_require__(90);
 
@@ -13121,7 +13121,7 @@ module.exports = shortOut;
 var SetCache = __webpack_require__(105),
     arrayIncludes = __webpack_require__(106),
     arrayIncludesWith = __webpack_require__(174),
-    arrayMap = __webpack_require__(35),
+    arrayMap = __webpack_require__(36),
     baseUnary = __webpack_require__(58),
     cacheHas = __webpack_require__(108);
 
@@ -13223,7 +13223,7 @@ module.exports = baseFindIndex;
 
 var baseClamp = __webpack_require__(271),
     baseToString = __webpack_require__(100),
-    toInteger = __webpack_require__(37),
+    toInteger = __webpack_require__(38),
     toString = __webpack_require__(34);
 
 /**
@@ -13791,7 +13791,7 @@ module.exports = baseProperty;
 /* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var identity = __webpack_require__(36);
+var identity = __webpack_require__(37);
 
 /**
  * Casts `value` to `identity` if it's not a function.
@@ -13904,7 +13904,7 @@ module.exports = find;
 
 var baseFindIndex = __webpack_require__(269),
     baseIteratee = __webpack_require__(25),
-    toInteger = __webpack_require__(37);
+    toInteger = __webpack_require__(38);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -13963,7 +13963,7 @@ module.exports = findIndex;
 /* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var identity = __webpack_require__(36),
+var identity = __webpack_require__(37),
     metaMap = __webpack_require__(295);
 
 /**
@@ -14907,7 +14907,7 @@ module.exports = baseMap;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseSum = __webpack_require__(682),
-    identity = __webpack_require__(36);
+    identity = __webpack_require__(37);
 
 /**
  * Computes the sum of the values in `array`.
@@ -15380,7 +15380,7 @@ var createLastItem = function createLastItem(totalPages) {
 
 var baseTimes = __webpack_require__(274),
     castFunction = __webpack_require__(289),
-    toInteger = __webpack_require__(37);
+    toInteger = __webpack_require__(38);
 
 /** Used as references for various `Number` constants. */
 var MAX_SAFE_INTEGER = 9007199254740991;
@@ -17968,7 +17968,7 @@ DropdownSearchInput.create = Object(__WEBPACK_IMPORTED_MODULE_10__lib__["m" /* c
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_includes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_includes__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_includes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash_includes__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash_get__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash_get___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash_get__);
@@ -18819,7 +18819,7 @@ BreadcrumbSection.create = Object(__WEBPACK_IMPORTED_MODULE_9__lib__["m" /* crea
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__elements_Button__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(40);
 
 
 
@@ -18875,7 +18875,7 @@ FormButton.defaultProps = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_Checkbox__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(40);
 
 
 
@@ -18931,7 +18931,7 @@ FormCheckbox.defaultProps = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_Dropdown__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(40);
 
 
 
@@ -19068,7 +19068,7 @@ FormGroup.propTypes = process.env.NODE_ENV !== "production" ? {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__elements_Input__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(40);
 
 
 
@@ -19124,7 +19124,7 @@ FormInput.defaultProps = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__addons_Radio__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(40);
 
 
 
@@ -19180,7 +19180,7 @@ FormRadio.defaultProps = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__addons_Select__ = __webpack_require__(349);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(40);
 
 
 
@@ -19236,7 +19236,7 @@ FormSelect.defaultProps = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__addons_TextArea__ = __webpack_require__(358);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormField__ = __webpack_require__(40);
 
 
 
@@ -21191,7 +21191,7 @@ StepGroup.propTypes = process.env.NODE_ENV !== "production" ? {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash_invoke___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_lodash_invoke__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash_without__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash_without___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_lodash_without__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_lodash_includes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_lodash_includes__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_lodash_includes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_lodash_includes__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_classnames__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_classnames__);
@@ -24603,7 +24603,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(22);
 
-var _semanticUiReact = __webpack_require__(41);
+var _semanticUiReact = __webpack_require__(35);
 
 var _actions = __webpack_require__(48);
 
@@ -24964,7 +24964,7 @@ _reactDom2.default.render(_react2.default.createElement(
  * LICENSE file in the root directory of this source tree.
  */
 
-var m=__webpack_require__(70),n=__webpack_require__(87),p=__webpack_require__(40),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
+var m=__webpack_require__(70),n=__webpack_require__(87),p=__webpack_require__(41),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.call"):60104,u=q?Symbol["for"]("react.return"):60105,v=q?Symbol["for"]("react.portal"):60106,w=q?Symbol["for"]("react.fragment"):60107,x="function"===typeof Symbol&&Symbol.iterator;
 function y(a){for(var b=arguments.length-1,e="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);b=Error(e+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 var z={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function A(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}A.prototype.isReactComponent={};A.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?y("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};A.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function B(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}function C(){}C.prototype=A.prototype;var D=B.prototype=new C;D.constructor=B;m(D,A.prototype);D.isPureReactComponent=!0;function E(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||z}var F=E.prototype=new C;F.constructor=E;m(F,A.prototype);F.unstable_isAsyncReactComponent=!0;F.render=function(){return this.props.children};var G={current:null},H=Object.prototype.hasOwnProperty,I={key:!0,ref:!0,__self:!0,__source:!0};
@@ -25004,7 +25004,7 @@ var _assign = __webpack_require__(70);
 var emptyObject = __webpack_require__(87);
 var invariant = __webpack_require__(71);
 var warning = __webpack_require__(88);
-var emptyFunction = __webpack_require__(40);
+var emptyFunction = __webpack_require__(41);
 var checkPropTypes = __webpack_require__(138);
 
 // TODO: this is special because it gets imported during build.
@@ -26360,7 +26360,7 @@ module.exports = react;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),l=__webpack_require__(226),B=__webpack_require__(70),C=__webpack_require__(40),ba=__webpack_require__(227),da=__webpack_require__(228),ea=__webpack_require__(141),fa=__webpack_require__(229),ia=__webpack_require__(230),D=__webpack_require__(87);
+var aa=__webpack_require__(0),l=__webpack_require__(226),B=__webpack_require__(70),C=__webpack_require__(41),ba=__webpack_require__(227),da=__webpack_require__(228),ea=__webpack_require__(141),fa=__webpack_require__(229),ia=__webpack_require__(230),D=__webpack_require__(87);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -26662,7 +26662,7 @@ var invariant = __webpack_require__(71);
 var warning = __webpack_require__(88);
 var ExecutionEnvironment = __webpack_require__(226);
 var _assign = __webpack_require__(70);
-var emptyFunction = __webpack_require__(40);
+var emptyFunction = __webpack_require__(41);
 var EventListener = __webpack_require__(227);
 var getActiveElement = __webpack_require__(228);
 var shallowEqual = __webpack_require__(141);
@@ -42293,7 +42293,7 @@ function createProvider() {
 
 
 
-var emptyFunction = __webpack_require__(40);
+var emptyFunction = __webpack_require__(41);
 var invariant = __webpack_require__(71);
 var warning = __webpack_require__(88);
 var assign = __webpack_require__(70);
@@ -42843,7 +42843,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 
-var emptyFunction = __webpack_require__(40);
+var emptyFunction = __webpack_require__(41);
 var invariant = __webpack_require__(71);
 var ReactPropTypesSecret = __webpack_require__(139);
 
@@ -48875,7 +48875,7 @@ module.exports = parent;
 
 var constant = __webpack_require__(561),
     defineProperty = __webpack_require__(266),
-    identity = __webpack_require__(36);
+    identity = __webpack_require__(37);
 
 /**
  * The base implementation of `setToString` without support for hot loop shorting.
@@ -50261,7 +50261,7 @@ module.exports = basePropertyDeep;
 /* 592 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(35),
+var arrayMap = __webpack_require__(36),
     baseIntersection = __webpack_require__(593),
     baseRest = __webpack_require__(46),
     castArrayLikeObject = __webpack_require__(594);
@@ -50300,7 +50300,7 @@ module.exports = intersection;
 var SetCache = __webpack_require__(105),
     arrayIncludes = __webpack_require__(106),
     arrayIncludesWith = __webpack_require__(174),
-    arrayMap = __webpack_require__(35),
+    arrayMap = __webpack_require__(36),
     baseUnary = __webpack_require__(58),
     cacheHas = __webpack_require__(108);
 
@@ -52472,7 +52472,7 @@ module.exports = {
   'iteratee': __webpack_require__(655),
   'keys': __webpack_require__(115),
   'rearg': __webpack_require__(656),
-  'toInteger': __webpack_require__(37),
+  'toInteger': __webpack_require__(38),
   'toPath': __webpack_require__(658)
 };
 
@@ -53867,7 +53867,7 @@ module.exports = flatten;
 /* 658 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(35),
+var arrayMap = __webpack_require__(36),
     copyArray = __webpack_require__(84),
     isArray = __webpack_require__(14),
     isSymbol = __webpack_require__(53),
@@ -54201,7 +54201,7 @@ module.exports = func;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseSlice = __webpack_require__(104),
-    toInteger = __webpack_require__(37);
+    toInteger = __webpack_require__(38);
 
 /**
  * Creates a slice of `array` with `n` elements taken from the beginning.
@@ -54308,13 +54308,13 @@ module.exports = sortBy;
 /* 677 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(35),
+var arrayMap = __webpack_require__(36),
     baseIteratee = __webpack_require__(25),
     baseMap = __webpack_require__(314),
     baseSortBy = __webpack_require__(678),
     baseUnary = __webpack_require__(58),
     compareMultiple = __webpack_require__(679),
-    identity = __webpack_require__(36);
+    identity = __webpack_require__(37);
 
 /**
  * The base implementation of `_.orderBy` without param guards.
@@ -54526,7 +54526,7 @@ module.exports = func;
 
 var baseExtremum = __webpack_require__(685),
     baseLt = __webpack_require__(686),
-    identity = __webpack_require__(36);
+    identity = __webpack_require__(37);
 
 /**
  * Computes the minimum value of `array`. If `array` is empty or falsey,
@@ -55426,7 +55426,7 @@ function getElementType(Component, props, getDefault) {
 /* unused harmony export htmlInputEvents */
 /* unused harmony export htmlInputProps */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return partitionHTMLProps; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_includes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_includes__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_includes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash_includes__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_forEach__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_forEach___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash_forEach__);
@@ -55494,7 +55494,7 @@ var partitionHTMLProps = function partitionHTMLProps(props) {
 /* 702 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(35);
+var arrayMap = __webpack_require__(36);
 
 /**
  * The base implementation of `_.values` and `_.valuesIn` which creates an
@@ -55714,7 +55714,7 @@ module.exports = func;
 /***/ (function(module, exports, __webpack_require__) {
 
 var convert = __webpack_require__(13),
-    func = convert('includes', __webpack_require__(38));
+    func = convert('includes', __webpack_require__(39));
 
 func.placeholder = __webpack_require__(12);
 module.exports = func;
@@ -57420,7 +57420,7 @@ Ref.propTypes = process.env.NODE_ENV !== "production" ? {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_pick__ = __webpack_require__(192);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_pick___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash_pick__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash_includes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash_includes__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash_includes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash_includes__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash_reduce__ = __webpack_require__(130);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash_reduce___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_lodash_reduce__);
@@ -58060,7 +58060,7 @@ module.exports = func;
 /***/ (function(module, exports, __webpack_require__) {
 
 var convert = __webpack_require__(13),
-    func = convert('identity', __webpack_require__(36), __webpack_require__(29));
+    func = convert('identity', __webpack_require__(37), __webpack_require__(29));
 
 func.placeholder = __webpack_require__(12);
 module.exports = func;
@@ -59652,7 +59652,7 @@ Select.Menu = __WEBPACK_IMPORTED_MODULE_3__modules_Dropdown__["a" /* default */]
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_lodash_union___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22_lodash_union__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_lodash_get__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_lodash_get___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23_lodash_get__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_lodash_includes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_lodash_includes__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_lodash_includes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24_lodash_includes__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25_lodash_isUndefined__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25_lodash_isUndefined___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25_lodash_isUndefined__);
@@ -61183,7 +61183,7 @@ module.exports = escapeRegExp;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseSlice = __webpack_require__(104),
-    toInteger = __webpack_require__(37);
+    toInteger = __webpack_require__(38);
 
 /**
  * Creates a slice of `array` with `n` elements dropped from the end.
@@ -61935,7 +61935,7 @@ TransitionablePortal.propTypes = process.env.NODE_ENV !== "production" ? {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash_forEach___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_lodash_forEach__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash_without__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash_without___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_lodash_without__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash_includes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash_includes__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_lodash_includes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_lodash_includes__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_prop_types__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_prop_types__);
@@ -62561,7 +62561,7 @@ Breadcrumb.Section = __WEBPACK_IMPORTED_MODULE_8__BreadcrumbSection__["a" /* def
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__FormButton__ = __webpack_require__(365);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__FormCheckbox__ = __webpack_require__(366);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__FormDropdown__ = __webpack_require__(367);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FormField__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__FormField__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__FormGroup__ = __webpack_require__(368);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__FormInput__ = __webpack_require__(369);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__FormRadio__ = __webpack_require__(370);
@@ -62757,7 +62757,7 @@ Form.propTypes = process.env.NODE_ENV !== "production" ? {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash_includes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash_includes__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_lodash_includes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_lodash_includes__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash_map__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_lodash_map__);
@@ -64413,7 +64413,7 @@ Reveal.Content = __WEBPACK_IMPORTED_MODULE_5__RevealContent__["a" /* default */]
 /* 819 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(35),
+var arrayMap = __webpack_require__(36),
     baseIteratee = __webpack_require__(25),
     basePickBy = __webpack_require__(311),
     getAllKeysIn = __webpack_require__(309);
@@ -64801,7 +64801,7 @@ Embed.propTypes = process.env.NODE_ENV !== "production" ? {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_lodash_mapValues___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_lodash_mapValues__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_lodash_isNumber__ = __webpack_require__(319);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_lodash_isNumber___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_lodash_isNumber__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_lodash_includes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_lodash_includes__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_lodash_includes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_lodash_includes__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_lodash_without__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_lodash_without___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_lodash_without__);
@@ -65628,7 +65628,7 @@ module.exports = round;
 /* 830 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(37),
+var toInteger = __webpack_require__(38),
     toNumber = __webpack_require__(111),
     toString = __webpack_require__(34);
 
@@ -69120,7 +69120,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(22);
 
-var _semanticUiReact = __webpack_require__(41);
+var _semanticUiReact = __webpack_require__(35);
 
 var _history = __webpack_require__(90);
 
@@ -69211,6 +69211,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(22);
 
+var _semanticUiReact = __webpack_require__(35);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69232,9 +69234,104 @@ var Home = function (_Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'h1',
+        _semanticUiReact.Container,
         null,
-        'Home'
+        _react2.default.createElement(
+          'div',
+          { style: { marginBottom: '10%', paddingTop: '10%' } },
+          _react2.default.createElement(_semanticUiReact.Header, {
+            size: 'huge',
+            content: 'BookJump',
+            inverted: true,
+            textAlign: 'center'
+          }),
+          _react2.default.createElement(_semanticUiReact.Header, {
+            size: 'medium',
+            content: "The first rule of bookjump is don't talk about bookjump.",
+            inverted: true,
+            textAlign: 'center'
+          })
+        ),
+        _react2.default.createElement(
+          _semanticUiReact.Card.Group,
+          { centered: true },
+          _react2.default.createElement(
+            _semanticUiReact.Card,
+            null,
+            _react2.default.createElement(
+              _semanticUiReact.Card.Content,
+              { textAlign: 'center' },
+              _react2.default.createElement(_semanticUiReact.Icon, { size: 'huge', name: 'book' }),
+              _react2.default.createElement(
+                _semanticUiReact.Card.Header,
+                null,
+                'Catalogue your books'
+              ),
+              _react2.default.createElement(
+                _semanticUiReact.Card.Meta,
+                null,
+                'online'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _semanticUiReact.Card,
+            null,
+            _react2.default.createElement(
+              _semanticUiReact.Card.Content,
+              { textAlign: 'center' },
+              _react2.default.createElement(_semanticUiReact.Icon, { size: 'huge', name: 'user' }),
+              _react2.default.createElement(
+                _semanticUiReact.Card.Header,
+                null,
+                ' See all of the books'
+              ),
+              _react2.default.createElement(
+                _semanticUiReact.Card.Meta,
+                null,
+                'our users own'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _semanticUiReact.Card,
+            null,
+            _react2.default.createElement(
+              _semanticUiReact.Card.Content,
+              { textAlign: 'center' },
+              _react2.default.createElement(_semanticUiReact.Icon, { size: 'huge', name: 'share' }),
+              _react2.default.createElement(
+                _semanticUiReact.Card.Header,
+                null,
+                'Request to borrow'
+              ),
+              _react2.default.createElement(
+                _semanticUiReact.Card.Meta,
+                null,
+                "other users' books"
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _semanticUiReact.Card,
+            null,
+            _react2.default.createElement(
+              _semanticUiReact.Card.Content,
+              { textAlign: 'center' },
+              _react2.default.createElement(_semanticUiReact.Icon, { size: 'huge', name: 'exchange' }),
+              _react2.default.createElement(
+                _semanticUiReact.Card.Header,
+                null,
+                'Easily manage books and requests'
+              ),
+              _react2.default.createElement(
+                _semanticUiReact.Card.Meta,
+                null,
+                'from your dashboard'
+              )
+            )
+          )
+        )
       );
     }
   }]);
@@ -69263,7 +69360,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(22);
 
-var _semanticUiReact = __webpack_require__(41);
+var _semanticUiReact = __webpack_require__(35);
 
 var _actions = __webpack_require__(48);
 
@@ -69409,7 +69506,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(22);
 
-var _semanticUiReact = __webpack_require__(41);
+var _semanticUiReact = __webpack_require__(35);
 
 var _actions = __webpack_require__(48);
 
@@ -69624,7 +69721,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(22);
 
-var _semanticUiReact = __webpack_require__(41);
+var _semanticUiReact = __webpack_require__(35);
 
 var _actions = __webpack_require__(48);
 
@@ -69766,7 +69863,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(22);
 
-var _semanticUiReact = __webpack_require__(41);
+var _semanticUiReact = __webpack_require__(35);
 
 var _actions = __webpack_require__(48);
 
@@ -69916,7 +70013,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(22);
 
-var _semanticUiReact = __webpack_require__(41);
+var _semanticUiReact = __webpack_require__(35);
 
 var _actions = __webpack_require__(48);
 
