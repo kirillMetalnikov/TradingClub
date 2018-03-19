@@ -4,6 +4,7 @@ import {Card, Image, Button, Container, Divider, Input, Segment} from 'semantic-
 
 import {addBook, getYourBooks, deleteBook} from '../actions'
 import TradePanel from './TradePanel'
+import NeedLogin from './NeedLogin'
 
 class YourBooks extends Component {
   constructor(props) {
@@ -56,26 +57,29 @@ class YourBooks extends Component {
   }
 
   render() {
+    var {yourBooks} = this.props
     return (
-      <Container>
-        <Segment.Group>
-          <Segment><TradePanel /></Segment>
-          <Segment  textAlign='right'>
-            <form onSubmit = {this.hundleSubmit.bind(this)}>
-              <Input type='text'  placeholder = 'enter name book' action>
-                <input onChange = {this.hundleChange.bind(this)} value = {this.state.inputValue}/>
-                <Button type='submit' color = 'violet'>Add</Button>
-              </Input>
-            </form>
-          </Segment>
-          <Segment>
-            <h2>Your books:</h2>
-            <Card.Group>
-              {this.renderList()}
-            </Card.Group>
-          </Segment>
-        </Segment.Group>
-      </Container>
+      <NeedLogin>
+        <Container>
+          <Segment.Group>
+            <Segment><TradePanel /></Segment>
+            <Segment  textAlign='right'>
+              <form onSubmit = {this.hundleSubmit.bind(this)}>
+                <Input type='text'  placeholder = 'enter name book' action>
+                  <input onChange = {this.hundleChange.bind(this)} value = {this.state.inputValue}/>
+                  <Button type='submit' color = 'violet'>Add</Button>
+                </Input>
+              </form>
+            </Segment>
+            <Segment hidden = {yourBooks.length == 0}>
+              <h2>Your books:</h2>
+              <Card.Group>
+                {this.renderList()}
+              </Card.Group>
+            </Segment>
+          </Segment.Group>
+        </Container>
+      </NeedLogin>
     )
   }
 }

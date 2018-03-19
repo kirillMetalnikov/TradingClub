@@ -1,3 +1,17 @@
 body {
   background-color: #6435c9;
 }
+
+.login-link {
+  display: block;
+  color: white;
+  padding-top: 20%;
+  margin: 0 auto;
+  width: 50%;
+}
+.login-link span {
+  border-bottom: 2px dashed orange
+}
+.login-link span:hover {
+  background-color: orange
+}

@@ -4,6 +4,7 @@ import {Card, Image, Button, Container, Divider, Segment} from 'semantic-ui-reac
 
 import {getAllBooks, trade} from '../actions'
 import TradePanel from './TradePanel'
+import NeedLogin from './NeedLogin'
 
 class AllBooks extends Component {
   constructor(props) {
@@ -45,17 +46,19 @@ class AllBooks extends Component {
 
   render() {
     return (
-      <Container>
-        <Segment.Group>
-          <Segment><TradePanel /></Segment>
-          <Segment>
-            <h2>All books:</h2>
-            <Card.Group>
-              {this.renderList()}
-            </Card.Group>
-          </Segment>
-        </Segment.Group>
-      </Container>
+      <NeedLogin>
+        <Container>
+          <Segment.Group>
+            <Segment><TradePanel /></Segment>
+            <Segment>
+              <h2>All books:</h2>
+              <Card.Group>
+                {this.renderList()}
+              </Card.Group>
+            </Segment>
+          </Segment.Group>
+        </Container>
+      </NeedLogin>
     )
   }
 }
